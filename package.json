@@ -1,0 +1,15 @@
+{
+  "name": "data-platform",
+  "version": "1.0.0",
+  "description": "Data platform for machine learning -- used to create data (csv) files for machine learning models",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Data",
+    "Platform"
+  ],
+  "author": "Francis James Tolentino",
+  "license": "ISC"
+}
