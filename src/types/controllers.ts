@@ -1,3 +1,4 @@
+
 import { LabelingImage, LabelingTask, User } from "@prisma/client";
 
 export interface IUserController {

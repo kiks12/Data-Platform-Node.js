@@ -13,8 +13,10 @@ import { authChecker } from "./middleware/authChecker";
 import labelingTaskRouter from "./routes/labelingTask";
 
 
+
 const app : Express = express()
 const PORT = process.env.PORT ?? 3000;
+
 
 
 // SETTING VIEW ENGINE TO EJS
@@ -44,8 +46,10 @@ app.use(session({
 }))
 
 
+
 // SERVE STATIC FILES
 app.use("/public", express.static(path.join(__dirname, "public")))
+
 
 
 // parse application/x-www-form-urlencoded
@@ -55,10 +59,13 @@ app.use(bodyParser.json())
 
 
 
+
 // INTEGRATE ROUTERS TO SPECIFIC ROUTES
 app.use("/", indexRouter)
 app.use("/auth", authRouter)
 app.use("/labeling", labelingTaskRouter)
+
+
 
 
 app.listen(PORT, () => console.log(`App listening at port ${PORT}`));
