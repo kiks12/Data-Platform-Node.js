@@ -8,7 +8,9 @@ const indexRouter: Router = express.Router();
 indexRouter
   .route("/")
   .get(authChecker, (req: Request, res: Response) => {
-    res.render("index/get")
+
+    res.redirect("/labeling")
+    // res.render("index/get")
   })
 
 

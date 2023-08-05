@@ -11,18 +11,22 @@ datasource db {
 }
 
 model User {
-  userId   Int    @id @default(autoincrement())
-  email    String
-  password String
-  name     String
+  userId       Int            @id @default(autoincrement())
+  email        String
+  password     String
+  name         String
+  LabelingTask LabelingTask[]
 }
 
 model LabelingTask {
   labelingTaskId Int                @id @default(autoincrement())
   name           String
   description    String
+  labels         String[]
+  user           User?              @relation(fields: [userUserId], references: [userId])
   Images         LabelingImage[]
   Status         LabelingTaskStatus
+  userUserId     Int?
 }
 
 enum LabelingTaskStatus {
@@ -34,7 +38,7 @@ model LabelingImage {
   imageId                    Int           @id @default(autoincrement())
   name                       String
   path                       String
-  label                      String
+  label                      String?
   LabelingTask               LabelingTask? @relation(fields: [labelingTaskLabelingTaskId], references: [labelingTaskId])
   labelingTaskLabelingTaskId Int?
 }
