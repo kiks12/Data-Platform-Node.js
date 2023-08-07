@@ -87,7 +87,10 @@ class LabelingTaskService implements LabelingTaskController {
         },
         include: {
           Images: true
-        }
+        },
+        orderBy: {
+          labelingTaskId: "asc"
+        },
       })  
     } catch (err) {
       console.error(err)

@@ -6,7 +6,6 @@
   <title>Labeling Tasks</title>
 
   <%- include("../partials/styles.ejs") %>
-  <!-- <%- include("../partials/vue.ejs") %> -->
 
 </head>
 <body>
@@ -17,27 +16,67 @@
     </nav>
   </header>
 
-  <aside class="float-end p-3 border border-top-0" style="height: 100vh; overflow-y: scroll;">
-    <h2>Pendings</h2>
-    <div id="pendings"></div>
-  </aside>
+  <main class="container-fluid">
+    <aside class="float-sm-end p-3 border-start col-2 sticky-top" style="overflow-y: scroll; height: 100vh;">
+      <h2>Pendings</h2>
+      <div id="pendings"></div>
+    </aside>
 
-  <aside class="float-start p-3 border border-top-0" style="height: 100vh; overflow-y: scroll;">
-    <h2>Task Details</h2>
-  </aside>
+    <aside class="float-sm-start p-3 border-end col-2 sticky-top" style="overflow-y: scroll; height: 100vh;">
+      <h2>Task Details</h2>
 
-  <main class="mx-auto" style="width: min(98%, 60em)">
-    <div id="active" class="py-3"></div>
+      <div class="mt-4">
+        <small class="text-secondary">ID</small>
+        <p id="taskId"></p>
+      </div>
+      <div>
+        <small class="text-secondary">Title</small>
+        <p id="title"></p>
+      </div>
+      <div>
+        <small class="text-secondary">Description</small>
+        <p id="description"></p>
+      </div>
+      <div>
+        <small class="text-secondary">Labels (Options)</small>
+        <ul id="labels" class="list-group"></ul>
+      </div>
+      <div class="mt-3">
+        <small class="text-secondary">Status</small>
+        <p id="status"></p>
+      </div>
 
-    <div class="m-2 w-100 bg-light mx-auto p-3 border rounded">
-      <button id="reportButton" class="btn btn-warning">Report</button>
-      <button id="submitButton" class="btn btn-success">Submit</button>
-    </div>
+      <div class="mt-3">
+        <small class="text-secondary">Actions</small>
+        <div class="btn-group-vertical w-100">
+          <button id="reportButton" class="btn btn-warning">Report</button>
+          <button id="submitButton" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="col-7 mx-auto">
+      <div class="container-fluid p-3">
+        <div class="col-4 float-sm-end card p-4 sticky-top">
+          <small class="text-secondary">Labels (Options)</small>
+          <div id="labelsContainer" class="btn-group-vertical mt-3" role="group"></div>
+        </div>
+        <div id="active" class="col-7"></div>
+
+        <div class="my-3 col-12">
+          <ul class="pagination" id="imagePagination">
+          </ul>
+        </div>
+      </div>
+    </section>
+
   </main>
 
+<script src="/public/js/modules/pagination.js"></script>
+<script src="/public/js/modules/nodes.js"></script>
+<script src="/public/js/labeling/index.js"></script>
 
-
-<script>
+<!-- <script>
 
 
 const activeContainer = document.getElementById("active")
@@ -218,7 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 submitBtn.addEventListener("click", submitLabels)
 
 
-</script>
+</script> -->
 
 </body>
 </html>
