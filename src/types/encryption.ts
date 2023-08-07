@@ -1,3 +1,4 @@
-
-export type EncryptStringFunction = (string: string | Buffer) => Promise<string> 
-export type CorrectPasswordFunction = (plainPassword: string, hashedPassword: string) => Promise<boolean>
+export interface Encryption {
+  encryptString: (string: string | Buffer) => Promise<string>;
+  correctPassword: (plainString: string, hashedString: string) => Promise<boolean>
+}

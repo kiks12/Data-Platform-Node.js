@@ -1,16 +1,18 @@
 
 import { User } from "@prisma/client";
 import express, { Request, Response, Router } from "express";
-import { correctPassword, encryptString } from "../utils/encryption";
 
 
 // IMPORT CONTROLLERS
-import UserController from "../controllers/user";
+import UserService from "../controllers/user";
 import { authChecker } from "../middleware/authChecker";
+import PasswordEncryption from "../modules/encryption";
 
 
 const authRouter: Router = express.Router();
-const controller = new UserController();
+
+const passwordEncryption = new PasswordEncryption()
+const controller = new UserService(passwordEncryption);
 
 
 
@@ -32,7 +34,7 @@ authRouter
         });
       }
 
-      if (!(await correctPassword(password, user?.password as string))) {
+      if (!(passwordEncryption.correctPassword(password, user?.password as string))) {
         return res.render("auth/login/get", {
           error: "Incorrect Password!"
         });
@@ -55,7 +57,6 @@ authRouter
   .post(async (req: Request, res: Response) => {
     try {
       const user = req.body as User
-      user.password = await encryptString(user.password)
       await controller.createUser(user);
       
       res.render("auth/register/post")
@@ -63,6 +64,7 @@ authRouter
       console.error(err)
     }
   })
+
 
 
 export default authRouter;

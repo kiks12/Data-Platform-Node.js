@@ -1,12 +1,12 @@
 
 import { LabelingImage, LabelingTask, User } from "@prisma/client";
 
-export interface IUserController {
+export interface UserController {
   createUser: (user: User) => {}
   getUser: (email: string) => Promise<User | null>
 }
 
-export interface ILabelingTaskController {
+export interface LabelingTaskController {
   createTask: (task: LabelingTask) => {}
   uploadLabelingImages: (images: LabelingImage[]) => {}
   editTask: (newTask: LabelingTask) => {}

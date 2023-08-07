@@ -10,7 +10,6 @@ indexRouter
   .get(authChecker, (req: Request, res: Response) => {
 
     res.redirect("/labeling")
-    // res.render("index/get")
   })
 
 

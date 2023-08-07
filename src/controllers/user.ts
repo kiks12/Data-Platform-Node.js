@@ -1,13 +1,19 @@
 
 import { User } from "@prisma/client";
 import users from "../models/user";
-import { IUserController } from "../types/controllers";
+import { UserController } from "../types/controllers";
+import { Encryption } from "../types/encryption";
 
-class UserController implements IUserController {
-  public constructor() {}
+class UserService implements UserController {
+  private readonly encryptor: Encryption;
+
+  public constructor(encryption: Encryption) {
+    this.encryptor = encryption
+  }
 
   public async createUser(user: User) {
     try {
+      user.password = await this.encryptor.encryptString(user.password)
       return await users.create({ data: user })
     } catch (err) {
       console.error(err)
@@ -29,4 +35,4 @@ class UserController implements IUserController {
 }
 
 
-export default UserController;
+export default UserService;

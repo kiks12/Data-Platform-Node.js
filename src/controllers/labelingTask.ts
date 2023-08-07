@@ -1,13 +1,13 @@
 
 import { LabelingImage, LabelingTask } from "@prisma/client";
-import { ILabelingTaskController } from "../types/controllers";
+import { LabelingTaskController } from "../types/controllers";
 import labelingTasks from "../models/labelingTask";
 import labelingImages from "../models/labelingImage";
 import { unlink } from 'fs/promises';
 import path from "path";
 
 
-class LabelingTaskController implements ILabelingTaskController {
+class LabelingTaskService implements LabelingTaskController {
 
   public constructor() {}
 
@@ -134,4 +134,4 @@ class LabelingTaskController implements ILabelingTaskController {
 }
 
 
-export default LabelingTaskController;
+export default LabelingTaskService;
