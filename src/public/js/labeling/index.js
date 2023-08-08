@@ -18,10 +18,12 @@ let tasks = []
 
 const nodes = new Nodes()
 const pagination = new Pagination()
+const validator = new Validator()
 
 // BUTTON CLICK EVENT LISTENERS
 const submitLabels = async () => {
   const updatedImages = active.Images
+  if (validator.nullCheckImages(updatedImages)) return alert("Make sure images labels are not null")
   const images = await putImageLabelsAPI(updatedImages)
   const activeTask = await putLabelingTaskAsDoneAPI(active.labelingTaskId)
   if (images && activeTask) setup()
