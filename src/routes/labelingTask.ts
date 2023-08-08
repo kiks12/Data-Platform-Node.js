@@ -3,6 +3,7 @@ import express, { Request, Response, Router } from "express"
 import LabelingTaskController from "../controllers/labelingTask"
 import multer from "multer"
 import { LabelingImage, LabelingTask } from "@prisma/client"
+import { authChecker } from "../middleware/authChecker"
 
 
 const labelingTaskRouter: Router = express.Router()
@@ -27,7 +28,7 @@ const upload = multer({ storage: storage })
 
 labelingTaskRouter
   .route("/")
-  .get(async (req: Request, res: Response) => {
+  .get(authChecker, async (req: Request, res: Response) => {
     res.render("labeling/get") 
   })
 

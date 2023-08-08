@@ -30,7 +30,11 @@ const submitLabels = async () => {
   if (validator.nullCheckImages(updatedImages)) return alert("Make sure images labels are not null")
   const images = await putImageLabelsAPI(updatedImages)
   const activeTask = await putLabelingTaskAsDoneAPI(active.labelingTaskId)
-  if (images && activeTask) setup()
+  if (images && activeTask) {
+    pagination.currentPage = 0
+    alert("Data submitted successfully")
+    setup()
+  }
 }
 // BUTTON CLICK EVENT LISTENERS
 
@@ -90,7 +94,6 @@ const setStyleOfPendingTaskCard = (task, div, name, description) => {
   div.classList.add(task.labelingTaskId === active.labelingTaskId ? "text-light" : "-")
   div.style.cursor = "pointer"
 }
-
 // DOM ELEMENTS STYLING
 
 
