@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <header class="bg-light border">
+  <header class="bg-light border-bottom">
     <nav class="navbar px-3">
       <h4>Labeling Tasks</h4>
     </nav>
@@ -18,7 +18,10 @@
 
   <main class="container-fluid">
     <aside class="float-sm-end p-3 border-start col-2 sticky-top" style="overflow-y: scroll; height: 100vh;">
-      <h2>Pendings</h2>
+      <div class="d-flex justify-content-between">
+        <h4>Pendings</h4>
+        <h4 id="pendingCount"></h4>
+      </div>
       <div id="pendings"></div>
     </aside>
 
@@ -26,7 +29,7 @@
       <h2>Task Details</h2>
 
       <div class="mt-4">
-        <small class="text-secondary">ID</small>
+        <small class="text-secondary">Task ID</small>
         <p id="taskId"></p>
       </div>
       <div>
@@ -55,14 +58,31 @@
       </div>
     </aside>
 
-    <section class="col-7 mx-auto">
+    <section class="col-8 mx-auto bg-light" style="height: 100vh;">
       <div class="container-fluid p-3">
-        <div class="col-4 float-sm-end card p-4 sticky-top">
+        <div class="col-3 float-sm-end p-4 sticky-top">
           <small class="text-secondary">Labels (Options)</small>
-          <div id="labelsContainer" class="btn-group-vertical mt-3" role="group"></div>
+          <div id="labelsContainer" class="mt-3" role="group"></div>
         </div>
-        <div id="active" class="col-7"></div>
-
+        <div class="col-9">
+          <div class="d-flex">
+            <div>
+              <small class="text-secondary">Image ID</small>
+              <p id="activeImageId"></p>
+            </div>
+            <div class="mx-5">
+              <small class="text-secondary">Name</small>
+              <p id="activeImageName"></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <small class="text-secondary text-wrap">Path</small>
+              <p id="activeImagePath"></p>
+            </div>
+          </div>
+          <img id="activeImage">
+        </div>
         <div class="my-3 col-12">
           <ul class="pagination" id="imagePagination">
           </ul>

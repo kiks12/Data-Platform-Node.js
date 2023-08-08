@@ -1,7 +1,10 @@
 
-
-const activeContainer = document.getElementById("active")
+const activeImageElement = document.getElementById("activeImage")
+const activeImageId = document.getElementById("activeImageId")
+const activeImageName = document.getElementById("activeImageName")
+const activeImagePath = document.getElementById("activeImagePath")
 const pendingsContainer = document.getElementById("pendings")
+const pendingCount = document.getElementById("pendingCount")
 const submitBtn = document.getElementById("submitButton")
 const activeTaskId = document.getElementById("taskId")
 const activeTaskTitle = document.getElementById("title")
@@ -19,6 +22,7 @@ let tasks = []
 const nodes = new Nodes()
 const pagination = new Pagination()
 const validator = new Validator()
+
 
 // BUTTON CLICK EVENT LISTENERS
 const submitLabels = async () => {
@@ -80,8 +84,10 @@ const putLabelingTaskAsDoneAPI = async (labelingTaskId) => {
 
 
 // DOM ELEMENTS STYLING
-const setStyleOfPendingTaskCard = (div, name, description) => {
+const setStyleOfPendingTaskCard = (task, div, name, description) => {
   div.classList.add("card", "my-2", "p-3", "px-4", "shadow-sm")
+  div.classList.add(task.labelingTaskId === active.labelingTaskId ? "bg-primary" : "-")
+  div.classList.add(task.labelingTaskId === active.labelingTaskId ? "text-light" : "-")
   div.style.cursor = "pointer"
 }
 
@@ -91,12 +97,13 @@ const setStyleOfPendingTaskCard = (div, name, description) => {
 
 // DOM MANIPULATION FUNCTIONS
 const setTasksOnDOM = async () => {
+  pendingCount.textContent = `(${tasks.length})`
   tasks.forEach((task, idx) => {
     const taskDiv = document.createElement("div")
-    const taskName = document.createElement("h4")
+    const taskName = document.createElement("h5")
     const taskDescription = document.createElement("p")
 
-    setStyleOfPendingTaskCard(taskDiv, taskName, taskDescription)
+    setStyleOfPendingTaskCard(task,taskDiv, taskName, taskDescription)
 
     taskName.textContent = task.name
     taskDescription.textContent = task.description
@@ -107,6 +114,8 @@ const setTasksOnDOM = async () => {
     taskDiv.addEventListener("click", () => {
       active = tasks[idx]
       setActiveTask()
+      clearContainers()
+      setTasksOnDOM()
     })
 
     pendingsContainer.appendChild(taskDiv)
@@ -114,48 +123,42 @@ const setTasksOnDOM = async () => {
 }
 
 const clearContainers = () => {
-  nodes.clearChildren(activeContainer)
   nodes.clearChildren(pendingsContainer)
 }
 
+const createLabelOptions = (label, labelIndex) => {
+  const labelDiv = document.createElement("div")
+  const labelCheck = document.createElement("input")
+  const labelElement = document.createElement("label")
+  labelCheck.id = `${pagination.currentPage}-${label}`
+  labelCheck.name = `${pagination.currentPage}`
+  labelCheck.type = "radio"
+  labelCheck.value = label
+  labelCheck.checked = label === activeImage.label
+  labelCheck.classList.add("mx-2")
+
+  labelCheck.addEventListener("change", () => {
+    active.Images[pagination.currentPage].label = label
+  })
+
+  labelElement.textContent = label
+  labelElement.htmlFor = `${pagination.currentPage}-${label}`
+
+  labelDiv.appendChild(labelCheck)
+  labelDiv.appendChild(labelElement)
+  labelsContainer.appendChild(labelDiv)
+}
+
 const setActiveImage = async () => {
-  nodes.clearChildren(activeContainer)
   nodes.clearChildren(labelsContainer)
   activeImage = active.Images[pagination.currentPage]
-  const imageContainer = document.createElement("div")
-  const img = document.createElement("img")
-  img.src = activeImage.path.slice(3)
-  img.style.height = "auto"
-  img.style.width = "80%"
-  imageContainer.appendChild(img)
-  
-  active.labels.forEach((label, labelIdx) => {
-    const labelCheck = document.createElement("input")
-    const labelElement = document.createElement("label")
-    labelCheck.id = `${pagination.currentPage}-${label}`
-    labelCheck.name = `${pagination.currentPage}`
-    labelCheck.type = "radio"
-    labelCheck.classList.add("btn-check")
-    labelCheck.value = label
-    labelCheck.checked = label === activeImage.label
-
-    labelCheck.addEventListener("change", () => {
-      active.Images[pagination.currentPage].label = label
-      if (pagination.currentPage+1 < pagination.pagesCount) {
-        pagination.currentPage = pagination.currentPage + 1
-      }
-      setActiveTask()
-    })
-
-    labelElement.textContent = label
-    labelElement.htmlFor = `${pagination.currentPage}-${label}`
-    labelElement.classList.add("btn", "btn-outline-primary")
-
-    labelsContainer.appendChild(labelCheck)
-    labelsContainer.appendChild(labelElement)
-  })
-  
-  activeContainer.appendChild(imageContainer)
+  activeImageElement.src = activeImage.path.slice(3)
+  activeImageElement.style.maxHeight = "62vh"
+  activeImageElement.style.width = "auto"
+  activeImageId.textContent = activeImage.imageId
+  activeImageName.textContent = activeImage.name
+  activeImagePath.textContent = activeImage.path
+  active.labels.forEach(createLabelOptions)
 }
 
 const setImagePagination = async () => {
